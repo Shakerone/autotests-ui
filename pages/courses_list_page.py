@@ -3,17 +3,6 @@ from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
 
 
-from dataclasses import dataclass
-
-@dataclass
-class CheckVisibleCourseCardParams:
-    index: int
-    title: str
-    max_score: str
-    min_score: str
-    estimated_time: str
-
-
 class CoursesListPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
@@ -56,21 +45,28 @@ class CoursesListPage(BasePage):
     def click_create_course_button(self):
         self.create_course_button.click()
 
-    def check_visible_course_card(self, params: CheckVisibleCourseCardParams):
-        expect(self.course_image.nth(params.index)).to_be_visible()
+    def check_visible_course_card(
+            self,
+            index: int,
+            title: str,
+            max_score: str,
+            min_score: str,
+            estimated_time: str
+    ):
+        expect(self.course_image.nth(index)).to_be_visible()
 
-        expect(self.course_title.nth(params.index)).to_be_visible()
-        expect(self.course_title.nth(params.index)).to_have_text(params.title)
+        expect(self.course_title.nth(index)).to_be_visible()
+        expect(self.course_title.nth(index)).to_have_text(title)
 
-        expect(self.course_max_score_text.nth(params.index)).to_be_visible()
-        expect(self.course_max_score_text.nth(params.index)).to_have_text(f"Max score: {params.max_score}")
+        expect(self.course_max_score_text.nth(index)).to_be_visible()
+        expect(self.course_max_score_text.nth(index)).to_have_text(f"Max score: {max_score}")
 
-        expect(self.course_min_score_text.nth(params.index)).to_be_visible()
-        expect(self.course_min_score_text.nth(params.index)).to_have_text(f"Min score: {params.min_score}")
+        expect(self.course_min_score_text.nth(index)).to_be_visible()
+        expect(self.course_min_score_text.nth(index)).to_have_text(f"Min score: {min_score}")
 
-        expect(self.course_estimated_time_text.nth(params.index)).to_be_visible()
-        expect(self.course_estimated_time_text.nth(params.index)).to_have_text(
-            f"Estimated time: {params.estimated_time}"
+        expect(self.course_estimated_time_text.nth(index)).to_be_visible()
+        expect(self.course_estimated_time_text.nth(index)).to_have_text(
+            f"Estimated time: {estimated_time}"
         )
 
     def click_edit_course(self, index: int):
