@@ -1,5 +1,6 @@
 from playwright.sync_api import Page, expect
 
+from components.navigation.sidebar_component import SidebarComponent
 from pages.base_page import BasePage
 
 
@@ -7,6 +8,7 @@ class CoursesListPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
+        self.sidebar = SidebarComponent(page)
         self.courses_title = page.get_by_test_id('courses-list-toolbar-title-text')
         self.create_course_button = page.get_by_test_id('courses-list-toolbar-create-course-button')
 
